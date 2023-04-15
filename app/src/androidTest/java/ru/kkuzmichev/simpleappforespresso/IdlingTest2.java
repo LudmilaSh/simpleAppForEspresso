@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -27,6 +28,8 @@ import androidx.test.filters.LargeTest;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +41,16 @@ public class IdlingTest2 {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
+
+    @Before
+    public void registerIdlingResources() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResources.idlingResource);
+    }
+
+    @After
+    public void unregisterIdlingResources() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResources.idlingResource);
+    }
 
     @Test
     public void idlingTest2() {
